@@ -65,5 +65,27 @@ namespace InAndOut.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Expenses.Find(id);
+            return View(obj);
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdatePost(Expense obj)
+        {
+            _db.Expenses.Update(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
     }
 }
